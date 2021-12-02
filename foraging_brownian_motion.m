@@ -38,32 +38,32 @@ for i = 1:max_iter
             end
             data(x,y) = 255;
         end
-        if found == 1
-            while x ~= start || y ~= start
-                if x<start
-                    x = x+1;
-                end
-                if x>start
-                    x = x-1;
-                end
-                if y<start
-                    y = y+1;
-                end
-                if y>start
-                    y = y-1;
-                end
-                data(x,y) = 255;
-                % Display it.
-                image(data);
-                % Initialize a color map array of 256 colors.
-                colorMap = turbo(256);
-                % Apply the colormap and show the colorbar
-                colormap(colorMap);
-                colorbar;
-                pause(0.001);
+    end
+    if found == 1
+        while x ~= start || y ~= start
+            if x<start
+                x = x+1;
             end
-            break
+            if x>start
+                x = x-1;
+            end
+            if y<start
+                y = y+1;
+            end
+            if y>start
+                y = y-1;
+            end
+            data(x,y) = 255;
+            % Display it.
+            image(data);
+            % Initialize a color map array of 256 colors.
+            colorMap = turbo(256);
+            % Apply the colormap and show the colorbar
+            colormap(colorMap);
+            colorbar;
+            pause(0.001);
         end
+        break
     end
     % Display it.
     image(data);
