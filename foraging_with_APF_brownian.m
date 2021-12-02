@@ -1,10 +1,11 @@
 % Create an environment of length x length
 length = 500;
 data = 100.*ones(length,length);
+nest = round(length/2);
 
 % Create APF environment
-ph_size = 15;
-APF_size = round(length/ph_size)
+ph_size = 5;
+APF_size = round(length/ph_size);
 APF = 255.*ones(APF_size,APF_size);
 
 %Create a 40x40 food source at x_food,y_food
@@ -14,12 +15,9 @@ data(x_food-10:x_food+10,y_food-10:y_food+10) = 100;
 
 % Initializing
 % Max Iterations
-max_iter = 500;
+max_iter = 1000;
+
 % Robot Spawn position;
-%x = randi(size);
-%y = randi(size);
-%start = round(length/2);
-nest = round(length/2);
 start = x_food;
 x = start; y = start;
 data(x,y) = 255; % Marking the places robot has visited with red
@@ -29,26 +27,9 @@ found = 0;
 
 for i = 1:max_iter
     if found == 0
-        s = 0;
-        while s==0
-            s = round(normrnd(0,1));
-        end
-        dx = 0; dy = 0;
-        while dx == 0 && dy == 0
-            dx = randi(3)-2;
-            dy = randi(3)-2;
-        end
-        for j = 1:abs(s)
-            x = max(min(x+dx,length),1);
-            y = max(min(y+dy,length),1);
-            if data(x,y) == 200
-                found = 1;
-                APF(round(x/ph_size),round(y/ph_size)) = 0;
-                APF = APF_decay(APF);
-                break
-            end
-            data(x,y) = 255;
-        end
+        s = levy_step;
+        [dx,dy] = rand_direction;
+        [x, y, data, APF, found] = next_step(x, y, s, dx, dy, data, APF);
     end
     if found == 1
         while x ~= nest || y ~= nest
@@ -67,48 +48,15 @@ for i = 1:max_iter
             data(x,y) = 255;
             APF(round(x/ph_size),round(y/ph_size)) = min(APF(round(x/ph_size),round(y/ph_size)),200);
             APF = APF_decay(APF);
-            % Display it.
-            figure(1);
-            set(gcf,'Position',[50 50 1300 500]);
-            subplot(1,2,1);
-            image(data);
-            subplot(1,2,2);
-            image(APF);
-            % Initialize a color map array of 256 colors.
-            colorMap = turbo(256);
-            % Apply the colormap and show the colorbar
-            colormap(colorMap);
-            colorbar;
-            pause(0.001);
+            display_sim(data, APF);
         end
     end
     APF = APF_decay(APF);
     % Display it.
-    figure(1);
-    set(gcf,'Position',[50 50 1300 500]);
-    subplot(1,2,1);
-    image(data);
-    subplot(1,2,2);
-    image(APF);
-    % Initialize a color map array of 256 colors.
-    colorMap = turbo(256);
-    % Apply the colormap and show the colorbar
-    colormap(colorMap);
-    colorbar;
-    pause(0.001);
+    display_sim(data,APF);
     display(i);
 end
 
 
 % Display it.
-figure(1);
-set(gcf,'Position',[50 50 1300 500]);
-subplot(1,2,1);
-image(data);
-subplot(1,2,2);
-image(APF);
-% Initialize a color map array of 256 colors.
-colorMap = turbo(256);
-% Apply the colormap and show the colorbar
-colormap(colorMap);
-colorbar;
+display_sim(data,APF);
