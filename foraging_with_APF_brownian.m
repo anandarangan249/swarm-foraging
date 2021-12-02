@@ -65,7 +65,7 @@ for i = 1:max_iter
                 y = y-1;
             end
             data(x,y) = 255;
-            APF(round(x/ph_size),round(y/ph_size)) = 0;
+            APF(round(x/ph_size),round(y/ph_size)) = min(APF(round(x/ph_size),round(y/ph_size)),200);
             APF = APF_decay(APF);
             % Display it.
             figure(1);
