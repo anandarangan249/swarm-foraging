@@ -17,14 +17,23 @@ for i = 1:max_iter
     end
     dx = 0; dy = 0;
     while dx == 0 && dy == 0
-        dx = randi(3)-2
-        dy = randi(3)-2
+        dx = randi(3)-2;
+        dy = randi(3)-2;
     end
     for i = 1:abs(s)
         x = max(min(x+dx,size),1);
         y = max(min(y+dy,size),1);
         data(x,y) = 255;
     end
+    % Display it.
+    image(data);
+    % Initialize a color map array of 256 colors.
+    colorMap = turbo(256);
+    % Apply the colormap and show the colorbar
+    colormap(colorMap);
+    colorbar;
+    pause(0.001);
+    display(i);
 end
 
 

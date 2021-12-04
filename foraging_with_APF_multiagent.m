@@ -4,31 +4,33 @@ data = 100.*ones(length,length);
 nest = round(length/2);
 
 % Create APF environment
-ph_size = 2;
+ph_size = 5;
 APF_size = round(length/ph_size)+1;
 APF = 255.*ones(APF_size,APF_size);
 
 %Create a 40x40 food source at x_food,y_food
-x_food = 150; y_food = 150;
-data(x_food-20:x_food+20,y_food-20:y_food+20) = 50;
-data(x_food-10:x_food+10,y_food-10:y_food+10) = 100;
+data = spawn_food(data);
 
 % Initializing
 % Max Iterations
 max_iter = 2000;
 
 % Robot Spawn position;
-start = x_food;
-x = start; y = start;
-data(x,y) = 255; % Marking the places robot has visited with red
+N = 10;
+[x,y] = spawn_robot(N, nest,length);
+for i = 1:N
+    data(x(i),y(i)) = 255;
+end
 
 % Food found flag
 found = 0;
 
 for i = 1:max_iter
-    s = levy_step;
-    [dx,dy] = rand_direction;
-    [x, y, data, APF] = next_step(x, y, s, dx, dy, data, APF, nest);
+    for k = 1:N
+        s = levy_step;
+        [dx,dy] = rand_direction;
+        [x(k), y(k), data, APF] = next_step(x(k), y(k), s, dx, dy, data, APF, nest);
+    end
     APF = APF_decay(APF);
     % Display it.
     display_sim(data,APF);
