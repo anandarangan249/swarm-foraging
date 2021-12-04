@@ -4,7 +4,7 @@ function APF_new = APF_decay(APF)
     
     % Decay and Diffusion Rate
     decay = 0.1;
-    diff_rate = 0.02;
+    diff_rate = 0.025;
     
     APF1 = [APF(:,2:APF_size),pad];
     APF2 = [pad,APF(:,1:APF_size-1)];
