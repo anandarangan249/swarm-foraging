@@ -8,7 +8,7 @@ function [x, y, data, APF] = next_step(x, y, s, dx, dy, data, APF, nest)
         if data(x,y) == 50
             APF(round(x/ph_size)+1,round(y/ph_size)+1) = 0;
             APF = APF_decay(APF);
-            [data, APF] = go_to_nest(x,y,nest,data,APF);
+            [data, APF] = go_to(x,y,nest,nest,data,APF);
             x = nest; y = nest;
             break
         end

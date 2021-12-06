@@ -1,7 +1,7 @@
 function data = spawn_food(data)
 x_food1 = 150; y_food1 = 150;
 data(x_food1-20:x_food1+20,y_food1-20:y_food1+20) = 50;
-data(x_food1-10:x_food1+10,y_food1-10:y_food1+10) = 100;
+data(x_food1-10:x_food1+10,y_food1-10:y_food1+10) = 150;
 %{
 x_food2 = 350; y_food2 = 350;
 data(x_food2-20:x_food2+20,y_food2-20:y_food2+20) = 50;

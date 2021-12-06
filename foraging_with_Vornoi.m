@@ -25,10 +25,22 @@ end
 % Food found flag
 found = 0;
 
+% Cover the centroids of Voronoi regions
+for k = 1:N
+    s = levy_step;
+    [dx,dy] = rand_direction;
+    [x(k), y(k), data, APF] = next_step(x(k), y(k), s, dx, dy, data, APF, nest);
+end
+[x, y, data, classifications] = voronoi_coverage(x,y,data,APF);
+figure(2);
+image(classifications.*(255/N))
+colormap(turbo(256));
+
 for i = 1:max_iter
     for k = 1:N
-        s = levy_step;
-        [dx,dy] = rand_direction;
+        %s = levy_step;
+        %[dx,dy] = rand_direction;
+        [s,dx,dy] = step_within_voronoi(x(k),y(k),classifications(x(k),y(k)),classifications);
         [x(k), y(k), data, APF] = next_step(x(k), y(k), s, dx, dy, data, APF, nest);
     end
     APF = APF_decay(APF);

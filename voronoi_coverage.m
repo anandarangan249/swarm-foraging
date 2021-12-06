@@ -1,9 +1,9 @@
-function [x,y,data] = voronoi_coverage(x,y,data)
+function [x,y,data,classifications] = voronoi_coverage(x,y,data,APF)
 [rows,cols] = size(data);
 [no_of_robots,]= size(x);
 centroids = [x,y];
 classifications = zeros(rows,cols);
-max_iter = 100;
+max_iter = 30;
 loss = 0;
 for i = 1:max_iter
     for j=1:rows
@@ -20,12 +20,12 @@ for i = 1:max_iter
     new_loss = 0;
     for m=1:no_of_robots
         [r,c] = find(classifications == m);
-        %display(r)
-        %display(c)
         new_centroid(m,1)=mean(r);
         new_centroid(m,2)=mean(c);
-        %display(new_centroid)
-        data(round(new_centroid(m,1)),round(new_centroid(m,2))) = 255;
+        if isempty(r)
+            new_centroid(m,:) = centroids(m,:);
+        end
+        data(round(new_centroid(m,1))+1,round(new_centroid(m,2))+1) = 255;
         for n=1:rows
             for o=1:cols
                 new_loss = new_loss + sqrt(((n-centroids(m,1))^2)+((o-centroids(m,2))^2));
@@ -37,7 +37,8 @@ for i = 1:max_iter
     end
     centroids = new_centroid;
     loss = new_loss;
+    display_sim(data,APF);
 end
-x = centroids(:,1);
-y = centroids(:,2);
+x = min(rows,max(1,round(centroids(:,1))));
+y = min(cols,max(1,round(centroids(:,2))));
 end
