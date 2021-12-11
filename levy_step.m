@@ -1,6 +1,6 @@
 function s = levy_step
     % Levy Flight parameters
-    beta = 1.1;
+    beta = 0.7;
     u = 0; s_u = 0;
     v = 0; s_v = 1;
     s = 0;

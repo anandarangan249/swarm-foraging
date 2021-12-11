@@ -1,11 +1,11 @@
 %% Initialization
 % Create an environment of size 100x100
 size = 500;
-data = 100.*ones(size,size);
+data = 150.*ones(size,size);
 
 % Initializing
 % Max Iterations
-max_iter = 1000;
+max_iter = 2000;
 % Robot Spawn position;
 %x = randi(size);
 %y = randi(size);
@@ -17,7 +17,7 @@ u = 0; s_u = 0;
 v = 0; s_v = 1;
 
 %% Levy Flight Algorithm
-for i = 1:max_iter
+for k = 1:max_iter
     s = 0;
     while s==0
         s_u = ((gamma(1+beta)*sin(pi*beta/2))/(gamma((1+beta)/2)*(2^((beta-1)/2))*beta))^(1/beta);
@@ -45,7 +45,7 @@ for i = 1:max_iter
     colormap(colorMap);
     colorbar;
     pause(0.005);
-    display(i);
+    display(k);
 end
 
 image(data);

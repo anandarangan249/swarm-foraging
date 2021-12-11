@@ -1,17 +1,17 @@
 % Create an environment of size 100x100
 size = 500;
-data = 100.*ones(size,size);
+data = 150.*ones(size,size);
 
 % Initializing
 % Max Iterations
-max_iter = 1000;
+max_iter = 100;
 % Number of agents
 N = 10;
 % Initialize N agents at the centre of the map
 x = round(size/2).*ones(N,1);
 y = round(size/2).*ones(N,1);
 % Levy Flight parameters
-beta = 1.3;
+beta = 0.8;
 u = 0; s_u = 0;
 v = 0; s_v = 1;
 

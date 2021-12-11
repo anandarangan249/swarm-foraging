@@ -9,14 +9,14 @@ APF_size = round(length/ph_size)+1;
 APF = 255.*ones(APF_size,APF_size);
 
 %Create a 40x40 food source at x_food,y_food
-data = spawn_food(data);
+%data = spawn_food(data);
 
 % Initializing
 % Max Iterations
-max_iter = 2000;
+max_iter = 500;
 
 % Robot Spawn position;
-N = 10;
+N = 20;
 [x,y] = spawn_robot(N, nest,length);
 for i = 1:N
     data(x(i),y(i)) = 255;
@@ -27,6 +27,7 @@ found = 0;
 
 for i = 1:max_iter
     for k = 1:N
+        %s = brownian_step;
         s = levy_step;
         [dx,dy] = rand_direction;
         [x(k), y(k), data, APF] = next_step(x(k), y(k), s, dx, dy, data, APF, nest);

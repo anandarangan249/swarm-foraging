@@ -1,7 +1,7 @@
 %% Initialization
 % Create an environment of size 100x100
 size = 500;
-data = 100.*ones(size,size);
+data = 150.*ones(size,size);
 
 % Initializing
 % Max Iterations
