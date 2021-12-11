@@ -9,7 +9,7 @@ APF_size = round(length/ph_size)+1;
 APF = 255.*ones(APF_size,APF_size);
 
 %Create a 40x40 food source at x_food,y_food
-%data = spawn_food(data);
+data = spawn_food(data);
 
 % Initializing
 % Max Iterations
